@@ -1,2 +1,3 @@
 # Nexus-CRM
-crm softcase
+Crm softcase, 
+um CRM proprio para controle de processos comericais
