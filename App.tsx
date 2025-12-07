@@ -45,7 +45,7 @@ const AppContent: React.FC = () => {
   const { currentUser, loading, currentOrganization, logout } = useAuth();
   const { togglePushNotifications, pushEnabled } = useData(); 
   
-  // STATE PERSISTENCE: Use localStorage instead of sessionStorage for robustness against browser kills (Camera usage)
+  // STATE PERSISTENCE
   const [activeModule, setActiveModule] = useState(() => {
       return localStorage.getItem('nexus_active_module') || 'dashboard';
   });
