@@ -1,5 +1,4 @@
 
-
 export type Role = 'admin' | 'executive' | 'sales' | 'support' | 'dev' | 'finance' | 'client';
 
 export enum LeadStatus {
@@ -41,16 +40,15 @@ export interface Organization {
   name: string;
   slug: string;
   plan: 'Trial' | 'Standard' | 'Enterprise';
-  licenseExpiresAt?: string; // ISO Date para controle de licença
-  subscription_status?: 'active' | 'blocked' | 'trial' | 'expired'; // Status financeiro
+  licenseExpiresAt?: string;
+  subscription_status?: 'active' | 'blocked' | 'trial' | 'expired';
 }
 
-// Configurações visuais do Portal do Cliente (White-Label)
 export interface PortalSettings {
   organizationId: string;
   portalName: string;
   logoUrl?: string;
-  primaryColor: string; // Hex code
+  primaryColor: string;
   welcomeMessage?: string;
   allowInvoiceDownload: boolean;
   allowTicketCreation: boolean;
@@ -65,9 +63,8 @@ export interface User {
   cpf?: string;
   phone?: string;
   password?: string;
-  organizationId?: string; // Link para a empresa (Tenant)
-  relatedClientId?: string; // Link para o Cliente específico (Se role === 'client')
-  // Gamification Fields
+  organizationId?: string;
+  relatedClientId?: string;
   xp?: number;
   level?: number;
 }
@@ -95,22 +92,21 @@ export interface ClientDocument {
     clientId: string;
     title: string;
     type: 'Contract' | 'Proposal' | 'NDA' | 'Image' | 'Other';
-    url: string; // Em um app real, seria a URL do Storage bucket
+    url: string;
     uploadedBy: string;
     uploadDate: string;
     size: string;
 }
 
-// --- CUSTOM FIELDS (NO-CODE) ---
 export type CustomFieldType = 'text' | 'number' | 'date' | 'select' | 'boolean';
 
 export interface CustomFieldDefinition {
     id: string;
-    label: string; // Nome visível (ex: "Data de Aniversário")
-    key: string; // Chave interna (ex: "birthday")
+    label: string;
+    key: string;
     type: CustomFieldType;
     module: 'leads' | 'clients';
-    options?: string[]; // Para tipo 'select'
+    options?: string[];
     required?: boolean;
     organizationId?: string;
 }
@@ -124,39 +120,32 @@ export interface Lead {
   status: LeadStatus;
   source: string;
   probability: number;
-  createdAt: string; // ISO Date - Essential for Sales Cycle Forecast
-  lastContact: string; // ISO Date
+  createdAt: string;
+  lastContact: string;
   organizationId?: string;
-  
-  // New Fields
   phone?: string;
-  cep?: string; // Zip Code
+  cep?: string;
   address?: string;
-  latitude?: number; // Real Geolocation
-  longitude?: number; // Real Geolocation
+  latitude?: number;
+  longitude?: number;
   website?: string;
   parkingSpots?: number; 
   productInterest?: string; 
-
-  // Nexus Radar (Enrichment Data)
   techStack?: string[];
   estimatedRevenue?: string;
   competitors?: string[];
   description?: string;
-
-  // Custom Fields Data
   metadata?: Record<string, any>;
 }
 
-// Interface para Prospecção IA
 export interface PotentialLead {
     id: string;
     companyName: string;
     industry: string;
     location: string;
-    matchScore: number; // 0-100
-    reason: string; // Por que essa empresa é um bom fit
-    suggestedApproach: string; // Dica de abordagem
+    matchScore: number;
+    reason: string;
+    suggestedApproach: string;
     estimatedSize: string;
     email?: string;
     phone?: string;
@@ -171,7 +160,6 @@ export interface ProspectingHistoryItem {
     results: PotentialLead[];
 }
 
-// --- NEXUS SPY (COMPETITIVE INTELLIGENCE) ---
 export interface Competitor {
     id: string;
     name: string;
@@ -185,8 +173,8 @@ export interface Competitor {
         threats: string[];
     };
     battlecard?: {
-        killPoints: string[]; // Argumentos fatais (Vantagem nossa)
-        defensePoints: string[]; // Como se defender deles
+        killPoints: string[];
+        defensePoints: string[];
         pricing?: string;
     };
     organizationId?: string;
@@ -205,7 +193,7 @@ export interface Client {
   id: string;
   name: string; 
   contactPerson: string;
-  document?: string; // CNPJ ou CPF
+  document?: string;
   email: string;
   phone: string;
   segment: string;
@@ -213,37 +201,31 @@ export interface Client {
   status: 'Active' | 'Churn Risk' | 'Inactive';
   ltv: number;
   nps?: number;
-  healthScore?: number; // 0 to 100
+  healthScore?: number;
   onboardingStatus?: 'Pending' | 'In Progress' | 'Completed';
-  lastContact?: string; // ISO Date - Novo campo para controle de retenção (30 dias)
+  lastContact?: string;
   organizationId?: string;
-  contractedProducts?: string[]; // IDs or Names of products
-  
-  // Optional fields for consistency with leads
+  contractedProducts?: string[];
   cep?: string;
   address?: string;
   latitude?: number;
   longitude?: number;
   website?: string;
   productInterest?: string;
-
-  // Fields from Excel Import Image (Estacionamento Specific)
-  contractId?: string; // "Contrato"
-  contractStartDate?: string; // "Início"
-  contractEndDate?: string; // "Fim"
-  unit?: string; // "Unidade"
-  parkingSpots?: number; // "Vagas"
-  exemptSpots?: number; // "Isentas"
-  vehicleCount?: number; // "Qtd. Veículos"
-  credentialCount?: number; // "Qtd. Credenciais"
-  pricingTable?: string; // "Tabela"
-  tablePrice?: number; // "R$ Tabela"
-  totalTablePrice?: number; // "R$ Tabela Total"
-  specialDay?: string; // "Dia Espec."
-  specialPrice?: number; // "R$ Especial"
-  totalSpecialPrice?: number; // "R$ Especial Total"
-
-  // Custom Fields Data
+  contractId?: string;
+  contractStartDate?: string;
+  contractEndDate?: string;
+  unit?: string;
+  parkingSpots?: number;
+  exemptSpots?: number;
+  vehicleCount?: number;
+  credentialCount?: number;
+  pricingTable?: string;
+  tablePrice?: number;
+  totalTablePrice?: number;
+  specialDay?: string;
+  specialPrice?: number;
+  totalSpecialPrice?: number;
   metadata?: Record<string, any>;
 }
 
@@ -262,11 +244,11 @@ export interface Ticket {
   priority: TicketPriority;
   status: TicketStatus;
   created_at: string;
-  resolvedAt?: string; // Data em que foi marcado como resolvido (para auto-close)
+  resolvedAt?: string;
   description: string;
   channel: 'Email' | 'Chat' | 'Phone';
   organizationId?: string;
-  responses?: TicketResponse[]; // Array to hold conversation history
+  responses?: TicketResponse[];
 }
 
 export interface Issue {
@@ -278,7 +260,7 @@ export interface Issue {
   assignee: string;
   sprint: string;
   project: string;
-  progress: number; // 0 to 100
+  progress: number;
   notes: Note[];
   organizationId?: string;
 }
@@ -308,10 +290,8 @@ export interface Proposal {
   timeline: string;
   terms: string;
   organizationId?: string;
-  
-  // Smart Contract Fields
-  signature?: string; // Base64 image
-  signedAt?: string; // ISO Date
+  signature?: string;
+  signedAt?: string;
   signedByIp?: string;
 }
 
@@ -324,8 +304,8 @@ export interface Activity {
   relatedTo: string; 
   assignee: string;
   organizationId?: string;
-  description?: string; // Novo: Resumo ou notas
-  metadata?: any; // Novo: Objeto JSON para dados complexos (transcrição de IA, etc)
+  description?: string;
+  metadata?: any;
 }
 
 export interface AuditLog {
@@ -339,6 +319,7 @@ export interface AuditLog {
   organizationId?: string;
 }
 
+// Renamed from Notification to SystemNotification to avoid conflict with DOM type
 export interface SystemNotification {
     id: string;
     title: string;
@@ -346,11 +327,10 @@ export interface SystemNotification {
     type: 'info' | 'warning' | 'success' | 'alert';
     timestamp: string;
     read: boolean;
-    relatedTo?: string; // ID of related entity
+    relatedTo?: string;
     organizationId?: string;
 }
 
-// Visual Toast Notification
 export interface ToastMessage {
   id: string;
   title: string;
@@ -358,7 +338,6 @@ export interface ToastMessage {
   type: 'info' | 'warning' | 'success' | 'alert';
 }
 
-// --- MARKETING TYPES ---
 export interface Campaign {
     id: string;
     name: string;
@@ -384,7 +363,6 @@ export interface MarketingContent {
     organizationId?: string;
 }
 
-// --- AUTOMATION & WEBHOOKS ---
 export type TriggerType = 'lead_created' | 'deal_won' | 'deal_lost' | 'ticket_created' | 'client_churn_risk';
 export type ActionType = 'send_email' | 'create_task' | 'notify_slack' | 'update_field';
 
@@ -392,8 +370,8 @@ export interface WorkflowAction {
     id: string;
     type: ActionType;
     config: {
-        target?: string; // e.g. email address or user ID
-        template?: string; // e.g. message body
+        target?: string;
+        template?: string;
         field?: string;
         value?: string;
     };
@@ -413,9 +391,9 @@ export interface Workflow {
     active: boolean;
     trigger: TriggerType;
     actions: WorkflowAction[];
-    runs: number; // Statistic: how many times it ran
+    runs: number;
     lastRun?: string;
-    logs?: WorkflowLog[]; // Histórico recente de execução
+    logs?: WorkflowLog[];
     organizationId?: string;
 }
 
@@ -430,18 +408,17 @@ export interface WebhookConfig {
     organizationId?: string;
 }
 
-// --- UNIFIED INBOX ---
 export interface InboxConversation {
     id: string;
     contactName: string;
-    contactIdentifier: string; // Email or Phone
+    contactIdentifier: string;
     type: 'WhatsApp' | 'Email' | 'Ticket';
     lastMessage: string;
     lastMessageAt: string;
     unreadCount: number;
     status: 'Open' | 'Closed' | 'Archived';
     messages: InboxMessage[];
-    relatedEntityId?: string; // ID of Lead or Client
+    relatedEntityId?: string;
 }
 
 export interface InboxMessage {
@@ -452,7 +429,6 @@ export interface InboxMessage {
     attachmentUrl?: string;
 }
 
-// --- PROJECTS & ONBOARDING TYPES ---
 export interface ProjectTask {
     id: string;
     title: string;
@@ -466,7 +442,7 @@ export interface ProjectNote {
     text: string;
     author: string;
     timestamp: string;
-    stage: string; // Em qual etapa estava quando anotou
+    stage: string;
 }
 
 export interface Project {
@@ -474,33 +450,26 @@ export interface Project {
     title: string;
     clientName: string;
     status: 'Planning' | 'Execution' | 'Review' | 'Completed';
-    progress: number; // 0-100
+    progress: number;
     startDate: string;
     deadline: string;
-    manager: string; // User ID
+    manager: string;
     tasks: ProjectTask[];
     organizationId?: string;
     description?: string;
-    installAddress?: string; // Novo: Local da instalação
-    photos?: string[]; // Novo: Galeria de evidências (URLs)
-    notes?: ProjectNote[]; // Novo: Diário de Obra
+    installAddress?: string;
+    photos?: string[];
+    notes?: ProjectNote[];
 }
 
 export interface KPIMetric {
   label: string;
   value: string;
-  trend: number; // percentage
+  trend: number;
   trendLabel: string;
   color: 'blue' | 'green' | 'red' | 'yellow';
 }
 
-export interface GeminiAnalysisResult {
-  summary: string;
-  sentiment: 'Positivo' | 'Neutro' | 'Negativo';
-  suggestedAction: string;
-}
-
-// Permission Types
 export type PermissionAction = 'view' | 'create' | 'edit' | 'delete';
 
 export interface PermissionMatrix {

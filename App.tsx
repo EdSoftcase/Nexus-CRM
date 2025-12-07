@@ -33,7 +33,7 @@ import { Projects } from './pages/Projects';
 import { Operations } from './pages/Operations'; 
 import { Prospecting } from './pages/Prospecting'; 
 import { CompetitiveIntelligence } from './pages/CompetitiveIntelligence'; 
-import { Inbox } from './pages/Inbox'; // NEW
+import { Inbox } from './pages/Inbox'; 
 import { Login } from './pages/Login';
 
 // Client Portal Pages
@@ -198,7 +198,7 @@ const AppContent: React.FC = () => {
             <button onClick={() => setIsSidebarOpen(true)} className="p-2 hover:bg-slate-800 rounded"><Menu size={24} /></button>
             <span className="font-bold text-lg">Nexus CRM</span>
             
-            {/* User Avatar - Mobile Right (Top of page requirement) */}
+            {/* User Avatar - Mobile Right */}
             <div className="w-9 h-9 rounded-full bg-slate-700 flex items-center justify-center text-xs font-bold overflow-hidden border border-slate-600 shadow-sm">
                 {currentUser?.avatar && (currentUser.avatar.startsWith('data:') || currentUser.avatar.startsWith('http')) ? (
                     <img src={currentUser.avatar} alt="Profile" className="w-full h-full object-cover" />
@@ -208,7 +208,7 @@ const AppContent: React.FC = () => {
             </div>
         </div>
 
-        {/* Desktop Top Bar - User Profile (Top of page requirement) */}
+        {/* Desktop Top Bar - User Profile */}
         <div className="hidden md:flex absolute top-4 right-8 z-30 pointer-events-none">
             <div className="flex items-center gap-3 bg-white dark:bg-slate-800 py-1.5 px-3 rounded-full shadow-sm border border-slate-200 dark:border-slate-700 transition-colors pointer-events-auto">
                 <div className="text-right leading-tight">
