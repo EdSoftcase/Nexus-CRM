@@ -67,6 +67,7 @@ export interface User {
   relatedClientId?: string;
   xp?: number;
   level?: number;
+  active?: boolean; // New field for user status
 }
 
 export interface Note {
@@ -459,6 +460,8 @@ export interface Project {
     installAddress?: string;
     photos?: string[];
     notes?: ProjectNote[];
+    archived?: boolean;
+    completedAt?: string;
 }
 
 export interface KPIMetric {
