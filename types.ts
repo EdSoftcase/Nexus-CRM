@@ -319,7 +319,6 @@ export interface AuditLog {
   organizationId?: string;
 }
 
-// Renamed from Notification to SystemNotification to avoid conflict with DOM type
 export interface SystemNotification {
     id: string;
     title: string;
